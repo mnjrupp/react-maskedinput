@@ -11,26 +11,33 @@ const options = [
   { value: 'vanilla', label: 'Vanilla' }
 ];
 
-class App extends React.Component {
+class CreditCardDetails extends React.Component {
   state = {
-    selectedOption: { value: 'vanilla', label: 'Vanilla' },
+    card: '',
+    expiry: '',
+    ccv: ''
   }
-
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
+ 
+  _onChange = (e) => {
+    this.setState({[e.target.name]: e.target.value})
   }
-
+ 
   render() {
-    const { selectedOption } = this.state;
-
-    return (
-      <Select
-        value={selectedOption}
-        onChange={this.handleChange}
-        options={options}
-      />
-    );
+    return <div className="CreditCardDetails">
+      <label>
+        Card Number:{' '}
+        <MaskedInput mask="1111 1111 1111 1111" name="card" size="20" onChange={this._onChange}/>
+      </label>
+      <label>
+        Expiry Date:{' '}
+        <MaskedInput mask="11/1111" name="expiry" placeholder="mm/yyyy" onChange={this._onChange}/>
+      </label>
+      <label>
+        CCV:{' '}
+        <MaskedInput mask="111" name="ccv" onChange={this._onChange}/>
+      </label>
+    </div>
   }
 }
 
-render(<App />, document.getElementById('root'));
+render(<CreditCardDetails/>, document.getElementById('root'));
